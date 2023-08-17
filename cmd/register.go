@@ -23,6 +23,7 @@ var registerCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		c.Authenticator.Options.UserNotVerified = !userVerified
 		resp, err := c.CreateAttestationResponse(args[0])
 		if err != nil {
 			return err
@@ -34,4 +35,5 @@ var registerCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(registerCmd)
+	registerCmd.Flags().BoolVar(&userVerified, "verified", false, "Set user veried to true in the response")
 }

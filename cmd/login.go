@@ -23,6 +23,7 @@ var loginCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		c.Authenticator.Options.UserNotVerified = !userVerified
 		resp, err := c.CreateAssertionResponse(args[0])
 		if err != nil {
 			return err
@@ -31,6 +32,8 @@ var loginCmd = &cobra.Command{
 		return nil
 	},
 }
+
+var userVerified bool
 
 func init() {
 	rootCmd.AddCommand(loginCmd)
@@ -43,5 +46,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	loginCmd.Flags().BoolVar(&userVerified, "verified", false, "Set user veried to true in the response")
 }
